@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 // import { useEffect, useState } from "react";
 // import { useRouter } from "next/router";
 // import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
@@ -60,14 +60,70 @@
 
 // export default FolderPage;
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../../lib/firebase";
+import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  listAll,
+  getDownloadURL,
+  uploadBytes,
+} from "firebase/storage";
+import { useRouter } from "next/router";
+const pageId = () => {
+  const router = useRouter();
+  const { folderId } = router.query;
+  const [folderName, setFolderName] = useState("");
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-const IndexId = () => {
+  useEffect(() => {
+    const fetchFolderDetails = async () => {
+      try {
+        // Fetch folder metadata from Firestore
+        const folderRef = doc(db, "folders", folderId);
+        const folderSnapshot = await getDoc(folderRef);
+
+        if (folderSnapshot.exists()) {
+          const folderData = folderSnapshot.data();
+          console.log("Fetched Folder Data:", folderData);
+
+          setFolderName(folderData.name || "Unnamed Folder");
+          navigation.setOptions({ title: folderData.name || "Folder Details" });
+
+          // Fetch images from Firebase Storage
+          const storage = getStorage();
+          const folderStorageRef = ref(storage, `folders/${folderId}`);
+          const folderList = await listAll(folderStorageRef);
+
+          const imageUrls = await Promise.all(
+            folderList.items.map((itemRef) => getDownloadURL(itemRef))
+          );
+
+          // console.log("Fetched Image URLs:", imageUrls);
+          setImages(imageUrls);
+        } else {
+          console.error("Folder not found.");
+        }
+      } catch (error) {
+        console.error("Error fetching folder details:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (folderId) fetchFolderDetails();
+  }, [folderId]);
+
+  if (loading) return <p>Loading folder images...</p>;
+
   return (
     <div>
-      <h1>folder here</h1>
+      <h1>{setFolderName}</h1>
     </div>
   );
 };
 
-export default IndexId;
+export default pageId;
