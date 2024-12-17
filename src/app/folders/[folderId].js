@@ -128,9 +128,115 @@
 
 // export default pageId;
 
+// import React, { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+// import { db } from "../../../lib/firebase"; // Adjust the path to your Firebase config
+// import { doc, getDoc } from "firebase/firestore";
+// import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+// import SwiperCore, { EffectCards } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/css";
+// import "swiper/css/effect-cards";
+
+// // Initialize Swiper modules
+// SwiperCore.use([EffectCards]);
+
+// const FolderDetails = () => {
+//   const router = useRouter();
+//   const { folderId } = router.query; // Retrieve folderId from the route
+//   const [folderName, setFolderName] = useState("");
+//   const [images, setImages] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   useEffect(() => {
+//     const fetchFolderDetails = async () => {
+//       if (!folderId) return; // Ensure folderId exists before fetching
+
+//       try {
+//         // Fetch folder metadata from Firestore
+//         const folderRef = doc(db, "folders", folderId);
+//         const folderSnapshot = await getDoc(folderRef);
+
+//         if (folderSnapshot.exists()) {
+//           const folderData = folderSnapshot.data();
+//           console.log("Fetched Folder Data:", folderData);
+
+//           setFolderName(folderData.name || "Unnamed Folder");
+
+//           // Fetch images from Firebase Storage
+//           const storage = getStorage();
+//           const folderStorageRef = ref(storage, `folders/${folderId}`);
+//           const folderList = await listAll(folderStorageRef);
+
+//           const imageUrls = await Promise.all(
+//             folderList.items.map((itemRef) => getDownloadURL(itemRef))
+//           );
+
+//           console.log("Fetched Image URLs:", imageUrls);
+//           setImages(imageUrls);
+//         } else {
+//           console.error("Folder not found.");
+//           alert("Error: Folder not found.");
+//         }
+//       } catch (error) {
+//         console.error("Error fetching folder details:", error.message);
+//         alert("Error: Failed to fetch folder details.");
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchFolderDetails();
+//   }, [folderId]);
+
+//   if (isLoading) {
+//     return (
+//       <div className="flex justify-center items-center h-screen">
+//         <p>Loading folder details...</p>
+//       </div>
+//     );
+//   }
+
+//   if (images.length === 0) {
+//     return (
+//       <div className="flex justify-center items-center h-screen">
+//         <p>No images found in this folder.</p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="container mx-auto p-4">
+//       <h1 className="text-3xl font-bold text-center mb-6">{folderName}</h1>
+//       <Swiper
+//         effect={"cards"}
+//         grabCursor={true}
+//         modules={[EffectCards]}
+//         className="mySwiper"
+//       >
+//         {images.map((imageUrl, index) => (
+//           <SwiperSlide key={index}>
+//             <div className="flex justify-center items-center">
+//               <img
+//                 src={imageUrl}
+//                 alt={`Slide ${index + 1}`}
+//                 className="rounded-lg object-cover w-full h-full"
+//               />
+//             </div>
+//           </SwiperSlide>
+//         ))}
+//       </Swiper>
+//     </div>
+//   );
+// };
+
+// export default FolderDetails;
+
+// Same code as above but updated to work in the `app` directory
+"use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { db } from "../../lib/firebase"; // Adjust the path to your Firebase config
+import { useRouter } from "next/navigation";
+import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import SwiperCore, { EffectCards } from "swiper";
@@ -138,32 +244,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 
-// Initialize Swiper modules
 SwiperCore.use([EffectCards]);
 
 const FolderDetails = () => {
   const router = useRouter();
-  const { folderId } = router.query; // Retrieve folderId from the route
+  const folderId = router.query?.folderId;
   const [folderName, setFolderName] = useState("");
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFolderDetails = async () => {
-      if (!folderId) return; // Ensure folderId exists before fetching
+      if (!folderId) return;
 
       try {
-        // Fetch folder metadata from Firestore
         const folderRef = doc(db, "folders", folderId);
         const folderSnapshot = await getDoc(folderRef);
 
         if (folderSnapshot.exists()) {
           const folderData = folderSnapshot.data();
-          console.log("Fetched Folder Data:", folderData);
-
           setFolderName(folderData.name || "Unnamed Folder");
 
-          // Fetch images from Firebase Storage
           const storage = getStorage();
           const folderStorageRef = ref(storage, `folders/${folderId}`);
           const folderList = await listAll(folderStorageRef);
@@ -171,16 +272,12 @@ const FolderDetails = () => {
           const imageUrls = await Promise.all(
             folderList.items.map((itemRef) => getDownloadURL(itemRef))
           );
-
-          console.log("Fetched Image URLs:", imageUrls);
           setImages(imageUrls);
         } else {
-          console.error("Folder not found.");
-          alert("Error: Folder not found.");
+          alert("Folder not found.");
         }
       } catch (error) {
         console.error("Error fetching folder details:", error.message);
-        alert("Error: Failed to fetch folder details.");
       } finally {
         setIsLoading(false);
       }
@@ -190,24 +287,16 @@ const FolderDetails = () => {
   }, [folderId]);
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p>Loading folder details...</p>
-      </div>
-    );
+    return <p>Loading...</p>;
   }
 
   if (images.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p>No images found in this folder.</p>
-      </div>
-    );
+    return <p>No images found in this folder.</p>;
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">{folderName}</h1>
+    <div className="container mx-auto">
+      <h1>{folderName}</h1>
       <Swiper
         effect={"cards"}
         grabCursor={true}
@@ -216,13 +305,11 @@ const FolderDetails = () => {
       >
         {images.map((imageUrl, index) => (
           <SwiperSlide key={index}>
-            <div className="flex justify-center items-center">
-              <img
-                src={imageUrl}
-                alt={`Slide ${index + 1}`}
-                className="rounded-lg object-cover w-full h-full"
-              />
-            </div>
+            <img
+              src={imageUrl}
+              alt={`Slide ${index + 1}`}
+              className="rounded-lg object-cover w-full h-full"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
