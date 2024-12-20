@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
       font-size: 1.2rem;
       font-family: inriaSans;
       @media (max-width: 500px) {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
   }
