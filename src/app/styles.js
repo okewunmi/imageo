@@ -42,10 +42,10 @@ export const Wrapper = styled.div`
     }
 
     &_txt {
-      font-size: 2rem;
+      font-size: 2.3rem;
       font-weight: bold;
       font-family: inriaSans;
-      padding-bottom: 0.6rem;
+      padding-bottom: 0.8rem;
 
       /* margin-top: 1.2rem; */
     }
