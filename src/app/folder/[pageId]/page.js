@@ -86,7 +86,8 @@ export default function FolderImages() {
     return (
       <div className="message">
         <div className="load"></div>
-        <div className="text-lg">Loading images from folder {folderId}...</div>
+        <p className="txt">Loading images...</p>
+        {/* <p className="txt">Loading images from folder {folderId}...</p> */}
       </div>
     );
   }
