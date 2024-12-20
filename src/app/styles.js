@@ -30,26 +30,33 @@ export const Wrapper = styled.div`
     padding: 1rem 3rem;
 
     @media (max-width: 500px) {
-      padding: 1rem;
+      padding: 2rem;
     }
 
     &_txt {
       font-size: 1.3rem;
       font-weight: bold;
       font-family: lato;
+      padding-bottom: 0.6rem;
+      @media (max-width: 500px) {
+        font-size: 1.3rem;
+      }
 
       /* margin-top: 1.2rem; */
     }
     p {
       font-size: 0.9rem;
       @media (max-width: 500px) {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
       }
     }
   }
   .swiper {
     width: 350px;
     height: 460px;
+    @media (max-width: 500px) {
+      padding-top: 3rem;
+    }
     /* margin-top: 1rem; */
 
     @media (max-width: 500px) {
