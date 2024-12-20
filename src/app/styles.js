@@ -28,6 +28,7 @@ export const Wrapper = styled.div`
   }
   .great {
     padding: 1rem 3rem;
+    color: #000;
 
     @media (max-width: 500px) {
       padding: 2rem;
