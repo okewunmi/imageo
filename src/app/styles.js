@@ -44,13 +44,14 @@ export const Wrapper = styled.div`
     &_txt {
       font-size: 2rem;
       font-weight: bold;
-      font-family: lato;
+      font-family: inriaSans;
       padding-bottom: 0.6rem;
 
       /* margin-top: 1.2rem; */
     }
     p {
       font-size: 1.2rem;
+      font-family: inriaSans;
       @media (max-width: 500px) {
         font-size: 1.1rem;
       }
