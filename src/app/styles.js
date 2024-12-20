@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
       font-size: 1.2rem;
       font-family: inriaSans;
       @media (max-width: 500px) {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
     }
   }
@@ -66,9 +66,9 @@ export const Wrapper = styled.div`
     display: flex;
 
     @media (max-width: 500px) {
-      padding-top: 3rem;
+      padding-top: 2rem;
       width: 300px;
-      height: 550px;
+      height: 500px;
       /* height: 450px; */
     }
     @media (max-width: 390px) {
