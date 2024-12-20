@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   height: 96vh;
   width: 60vw;
   justify-self: center;
+  align-items: center;
   background-color: #fff;
   border-radius: 1.5rem;
 
@@ -26,47 +27,51 @@ export const Wrapper = styled.div`
       display: none;
     }
   }
-  .great {
-    padding: 1rem 3rem;
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
     color: #000;
-
+  }
+  .great {
+    color: #000;
+    padding: 1rem 3rem;
     @media (max-width: 500px) {
-      padding: 2rem;
+      padding: 2rem 1.2rem;
     }
 
     &_txt {
-      font-size: 1.3rem;
+      font-size: 2rem;
       font-weight: bold;
       font-family: lato;
       padding-bottom: 0.6rem;
-      @media (max-width: 500px) {
-        font-size: 1.3rem;
-      }
 
       /* margin-top: 1.2rem; */
     }
     p {
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       @media (max-width: 500px) {
-        font-size: 0.8rem;
+        font-size: 1.1rem;
       }
     }
   }
+
   .swiper {
     width: 350px;
-    height: 460px;
-    @media (max-width: 500px) {
-      padding-top: 3.5rem;
-    }
-    /* margin-top: 1rem; */
+    height: 490px;
+    justify-self: center;
+    align-items: center;
+    display: flex;
 
     @media (max-width: 500px) {
+      padding-top: 3rem;
       width: 300px;
-      height: 420px;
+      height: 550px;
+      /* height: 450px; */
     }
     @media (max-width: 390px) {
-      width: 220px;
-      height: 420px;
+      width: 250px;
     }
   }
 

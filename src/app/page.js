@@ -49,6 +49,7 @@ const Page = () => {
   return (
     <Wrapper>
       <header></header>
+
       <div className="great">
         <h3 className="great_txt">
           Hello <span>✋,</span>

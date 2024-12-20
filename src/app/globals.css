@@ -40,3 +40,8 @@ a {
     color-scheme: dark;
   }
 }
+
+.message{
+  width: 100%;
+  background-color: red;
+}

@@ -1,4 +1,5 @@
 "use client";
+import "../../globals.css";
 import { storage } from "../../../../lib/firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useState, useEffect } from "react";
@@ -83,7 +84,7 @@ export default function FolderImages() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen p-4">
+      <div className="message">
         <div className="text-lg">Loading images from folder {folderId}...</div>
       </div>
     );
@@ -103,18 +104,17 @@ export default function FolderImages() {
 
   if (images.length === 0) {
     return (
-      <div className="p-4">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h2 className="text-lg font-semibold">No Images Found</h2>
-          <p>No images were found in folder: {folderId}</p>
-        </div>
+      <div className="message">
+        <h2 className="text-lg font-semibold">No Images Found</h2>
+        <p>No images were found in folder: {folderId}</p>
       </div>
     );
   }
 
   return (
-    <Wrapper className="container mx-auto px-4 py-8">
+    <Wrapper>
       <header></header>
+      <div className="container"></div>
       <div className="great">
         <h3 className="great_txt">
           Hello <span>✋,</span>
